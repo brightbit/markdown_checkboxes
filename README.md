@@ -39,7 +39,7 @@ end
 The `updated_text` parameter that you get in the block will be the text that your body will get changed to,
 should that checkbox get clicked. You'll want to include this somewhere in a `url` option in your returning data hash.
 
-Assuming you have your infrastructure set up accordingly, this should send an update request to your server to update
+Assuming you have your infrastructure set up accordingly, this should send an HTTP put request to your server to update
 your post's body, as well as fire unobtrusive javascript after the action is completed (allowing you to do
 things like prevent a page refresh, and other cool js things)
 

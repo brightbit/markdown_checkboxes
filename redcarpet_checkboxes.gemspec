@@ -11,6 +11,10 @@ Gem::Specification.new do |s|
   s.files       = ['lib/redcarpet_checkboxes.rb']
   s.homepage    = 'http://rubygems.org/gems/redcarpet_checkboxes'
   s.license     = 'MIT'
-  s.add_runtime_dependency "redcarpet"
-  s.add_runtime_dependency "actionpack"
+
+  s.add_runtime_dependency "redcarpet",   '>= 3.0.0'
+  s.add_runtime_dependency "actionpack",  '>= 2.0.0'
+
+  s.add_development_dependency "rake-compiler", "~> 0.8.3"
+  s.add_development_dependency "test-unit",     "~> 2.5.4"
 end
