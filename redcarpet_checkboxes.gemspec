@@ -1,6 +1,8 @@
+require File.dirname(__FILE__) + '/lib/redcarpet_checkboxes'
+
 Gem::Specification.new do |s|
   s.name        = 'redcarpet_checkboxes'
-  s.version     = '0.0.1'
+  s.version     = CheckboxMarkdown::VERSION
   s.date        = '2013-11-15'
   s.summary     = 'Redcarpet + Checkboxes'
   s.description = 'Adding checkbox rendering functionality on top of the redcarpet markdown parser'
