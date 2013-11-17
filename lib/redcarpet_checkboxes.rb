@@ -4,7 +4,7 @@ require 'action_view'
 class CheckboxMarkdown < Redcarpet::Markdown
   include ActionView::Helpers::FormTagHelper
 
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   def render(text, &block)
     text = parse_with_checkboxes(text, &block)
