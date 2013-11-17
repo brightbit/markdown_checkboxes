@@ -4,7 +4,7 @@ require 'action_view'
 class CheckboxMarkdown < Redcarpet::Markdown
   include ActionView::Helpers::FormTagHelper
 
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
 
   def render(text, &block)
     text = parse_with_checkboxes(text, &block)
@@ -13,7 +13,7 @@ class CheckboxMarkdown < Redcarpet::Markdown
 
   private
 
-  def parse_with_checkboxes(text)
+  def parse_with_checkboxes(text, &block)
     checkbox_regex  = /-\s?\[(x|\s)\]/
 
     text.gsub(checkbox_regex).with_index do |current_match, current_index|
@@ -28,13 +28,15 @@ class CheckboxMarkdown < Redcarpet::Markdown
           end
         end
 
-      data_options =
-        if block_given?
-          Hash[yield(body).map { |k,v| [k.to_s, v.to_s] }] # force the jsonable hash
-        else
-          {}
-        end
-      check_box_tag "check_#{current_index}", "", checked, data: data_options
+      check_box_tag "check_#{current_index}", "", checked, data: data_options(body, &block)
+    end
+  end
+
+  def data_options(body)
+    if block_given?
+      Hash[yield(body).map { |k,v| [k.to_s, v.to_s] }] # force the jsonable hash
+    else
+      {}
     end
   end
 
