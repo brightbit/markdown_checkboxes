@@ -25,7 +25,7 @@ class DataStructTest < Test::Unit::TestCase
   def test_underscores_turning_to_dashes
     @struct.okc_thunder = "awesome"
     assert @struct.data.has_key? "okc-thunder"
-    assert @struct.data["okc-thunder"] == 'awesome'
+    assert_equal @struct.data["okc-thunder"], 'awesome'
   end
 
   def test_still_calls_real_method_missing
