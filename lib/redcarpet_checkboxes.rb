@@ -1,10 +1,11 @@
 require 'redcarpet'
 require 'action_view'
+require File.dirname(__FILE__) + '/redcarpet_checkboxes/data_struct'
 
 class CheckboxMarkdown < Redcarpet::Markdown
   include ActionView::Helpers::FormTagHelper
 
-  VERSION = '0.1.2'
+  VERSION = '0.2.0'
 
   def render(text, &block)
     text = parse_with_checkboxes(text, &block)
@@ -34,7 +35,9 @@ class CheckboxMarkdown < Redcarpet::Markdown
 
   def data_options(body)
     if block_given?
-      Hash[yield(body).map { |k,v| [k.to_s, v.to_s] }] # force the jsonable hash
+      data_struct = DataStruct.new
+      yield(data_struct, body)
+      data_struct.serializable_hash
     else
       {}
     end

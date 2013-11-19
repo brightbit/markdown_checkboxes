@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'redcarpet_checkboxes'
+require File.dirname(__FILE__) + '/../lib/redcarpet_checkboxes'
 
 class RedcarpetCheckboxesTest < Test::Unit::TestCase
 
@@ -28,7 +28,17 @@ class RedcarpetCheckboxesTest < Test::Unit::TestCase
   end
 
   def test_checkbox_data_setting
-    assert_match(/data-remote="true"/,  @m.render("- [ ]") { |updated_text| {remote: true} })
-    assert_match(/data-method="put"/,   @m.render("- [x]") { |updated_text| {remote: true, method: :put} })
+    assert_match(/data-remote="true"/,
+      @m.render("- [ ]") do |data, updated_text|
+        data.remote = true
+      end
+    )
+
+    assert_match(/data-method="put"/,
+      @m.render("- [x]") do |data, updated_text|
+        data.remote = true
+        data.method = :put
+      end
+    )
   end
 end

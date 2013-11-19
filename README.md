@@ -31,8 +31,10 @@ Now, these checkboxes will be visually built and clickable, but they won't activ
 To add some update action, throw in a block with some options like:
 
 ```ruby
-parser.render(markdown) do |updated_text|
-  { remote: true, method: :put, url: post_path(@post, post: { body: updated_text }) }
+parser.render(markdown) do |data, updated_text|
+  data.remote = true
+  data.method = :put
+  data.url = post_path(@post, post: { body: updated_text })
 end
 ```
 

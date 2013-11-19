@@ -3,12 +3,12 @@ require File.dirname(__FILE__) + '/lib/redcarpet_checkboxes'
 Gem::Specification.new do |s|
   s.name        = 'redcarpet_checkboxes'
   s.version     = CheckboxMarkdown::VERSION
-  s.date        = '2013-11-17'
+  s.date        = '2013-11-19'
   s.summary     = 'Redcarpet + Checkboxes'
   s.description = 'Adding checkbox rendering functionality on top of the redcarpet markdown parser'
   s.authors     = ['Brightbit Apps']
   s.email       = 'aaron@brightbit.com'
-  s.files       = ['lib/redcarpet_checkboxes.rb']
+  s.files       = ['lib/redcarpet_checkboxes.rb', 'lib/redcarpet_checkboxes/data_struct.rb']
   s.homepage    = 'http://rubygems.org/gems/redcarpet_checkboxes'
   s.license     = 'MIT'
 
