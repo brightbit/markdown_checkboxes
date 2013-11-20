@@ -1,11 +1,11 @@
 require 'redcarpet'
 require 'action_view'
-require File.dirname(__FILE__) + '/redcarpet_checkboxes/data_struct'
+require File.dirname(__FILE__) + '/markdown_checkboxes/data_struct'
 
 class CheckboxMarkdown < Redcarpet::Markdown
   include ActionView::Helpers::FormTagHelper
 
-  VERSION = '0.2.1'
+  VERSION = '0.3.0'
 
   def render(text, &block)
     text = parse_with_checkboxes(text, &block)

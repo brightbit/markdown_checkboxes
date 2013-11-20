@@ -1,5 +1,5 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/redcarpet_checkboxes/data_struct'
+require File.dirname(__FILE__) + '/../lib/markdown_checkboxes/data_struct'
 
 class DataStructTest < Test::Unit::TestCase
 

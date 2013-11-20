@@ -1,7 +1,7 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/redcarpet_checkboxes'
+require File.dirname(__FILE__) + '/../lib/markdown_checkboxes'
 
-class RedcarpetCheckboxesTest < Test::Unit::TestCase
+class MarkdownCheckboxesTest < Test::Unit::TestCase
 
   def setup
     @m ||= CheckboxMarkdown.new(Redcarpet::Render::HTML.new())

@@ -1,4 +1,4 @@
-# Redcarpet Checkboxes
+# Markdown Checkboxes
 ## By [Brightbit Apps](http://www.brightbit.com)
 
 This small, yet handy library sits on top of the [Redcarpet](https://github.com/vmg/redcarpet) markdown parser
@@ -6,7 +6,7 @@ and adds checkbox rendering functionality simply by adding `- [ ]` or `- [x]` to
 (similar to how GitHub does it). To build a bare bones checkbox markdown parser:
 
 ```ruby
-require 'redcarpet_checkboxes'
+require 'markdown_checkboxes'
 
 parser = CheckboxMarkdown.new(Redcarpet::Render::HTML.new())
 
@@ -48,7 +48,7 @@ things like prevent a page refresh, and other cool js things)
 ### Installation
 
 ```
-gem install redcarpet_checkboxes
+gem install markdown_checkboxes
 ```
 
 ### Testing
