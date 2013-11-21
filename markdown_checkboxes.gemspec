@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/lib/markdown_checkboxes'
 Gem::Specification.new do |s|
   s.name        = 'markdown_checkboxes'
   s.version     = CheckboxMarkdown::VERSION
-  s.date        = '2013-11-19'
+  s.date        = '2013-11-20'
   s.summary     = 'Markdown with checkbox support'
   s.description = 'Adding checkbox rendering functionality on top of the redcarpet markdown parser'
   s.authors     = ['Brightbit Apps']

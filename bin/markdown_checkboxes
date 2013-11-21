@@ -14,7 +14,7 @@ end
 require 'markdown_checkboxes'
 
 if ARGV.include?('--version') or ARGV.include?('-v')
-  puts "Redcarpet Checkbox #{CheckboxMarkdown::VERSION}"
+  puts "markdown_checkboxes #{CheckboxMarkdown::VERSION}"
   exit 0
 end
 
