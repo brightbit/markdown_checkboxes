@@ -1,11 +1,11 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/markdown_checkboxes/data_struct'
+require 'markdown_checkboxes/data_struct'
 
 class DataStructTest < Test::Unit::TestCase
 
   def setup
-    @struct = DataStruct.new
-    @struct.key  = "value"
+    @struct = DataStruct.new('Lorem ipsum...')
+    @struct.key  = 'value'
     @struct.test = true
   end
 
@@ -13,19 +13,15 @@ class DataStructTest < Test::Unit::TestCase
     assert @struct.is_a? DataStruct
   end
 
-  def test_methods_turn_into_key_value_pairs
-    assert_equal @struct.data["key"], "value"
-    assert_equal @struct.data["test"], true
-  end
-
-  def test_serializable_hash
-    assert_equal @struct.serializable_hash, { "key" => "value", "test" => "true" }
+  def test_methods_turn_into_stringified_key_value_pairs
+    assert_equal @struct.data['key'], 'value'
+    assert_equal @struct.data['test'], 'true'
   end
 
   def test_underscores_turning_to_dashes
-    @struct.okc_thunder = "awesome"
-    assert @struct.data.has_key? "okc-thunder"
-    assert_equal @struct.data["okc-thunder"], 'awesome'
+    @struct.okc_thunder = 'awesome'
+    assert @struct.data.has_key?('okc-thunder')
+    assert_equal @struct.data['okc-thunder'], 'awesome'
   end
 
   def test_still_calls_real_method_missing
@@ -34,5 +30,15 @@ class DataStructTest < Test::Unit::TestCase
     end
   end
 
-end
+  def test_responds_to_setters
+    assert_respond_to @struct, :setter=
+    assert_respond_to @struct, :alt_setter=
+  end
 
+  def test_responds_to_data_keys_getters
+    @struct.okc_thunder = 'awesome'
+    assert_respond_to @struct, :okc_thunder
+    refute_respond_to @struct, :getter
+  end
+
+end

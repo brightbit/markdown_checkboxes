@@ -1,20 +1,27 @@
 class DataStruct
   attr_accessor :data
 
-  def initialize
+  def initialize(body)
     @data = {}
-  end
-
-  def serializable_hash
-    Hash[@data.map { |k,v| [k.to_s, v.to_s] }]
+    yield(self, body) if block_given?
   end
 
   def method_missing(name, *args, &block)
-    if name.to_s =~ /=$/
-      @data[name.to_s.gsub('_', '-').chop] = args.first
-    else
-      super(name, *args, &block)
-    end
+    return super if !is_setter(name)
+    @data[dashed(name)] = args.first.to_s
+  end
+
+  def respond_to_missing?(method_name, include_private = false)
+    is_setter(method_name) || @data.has_key?(dashed(method_name)) || super
+  end
+
+  private
+
+  def is_setter(method_name)
+    !!(method_name.to_s =~ /=\z/)
+  end
+
+  def dashed(value)
+    value.to_s.gsub('_', '-').sub(/=\z/, '')
   end
 end
-
