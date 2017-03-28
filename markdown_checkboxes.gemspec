@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
 
   s.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
+    f.match(/\.gem\z/)
   end
 
   s.bindir        = 'exe'
