@@ -50,4 +50,9 @@ class MarkdownCheckboxesTest < Test::Unit::TestCase
     refute_match(/disabled/, @m.render('- [ ]'))
     refute_match(/disabled/, @m.render('- [x]'))
   end
+
+  def test_raw_text_in_html_options
+    assert_match(/lorem\sipsum/, @m.render('- [ ]', disabled: true, raw_text: 'lorem ipsum') { |data, text| data.url = 'path?key=' + text })
+    assert_match(/hello\sworld/, @m.render('- [ ]', disabled: false, raw_text: 'hello world') { |data, text| data.url = 'path?key=' + text })
+  end
 end
