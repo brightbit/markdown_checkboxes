@@ -61,6 +61,28 @@ Assuming you have your infrastructure set up accordingly, this should send an HT
 your post's body, as well as fire unobtrusive javascript after the action is completed (allowing you to do
 things like prevent a page refresh, and other cool js things)
 
+### Passing html options
+
+Also, it is possible to pass html options to rendered checkboxes.
+
+You can pass second argument to `#render` method with hash of options:
+
+```ruby
+markdown = '- [ ] - [x]'
+html_options = { disabled: true }
+
+parser.render(markdown, html_options) do |data, updated_text|
+  # ...
+end
+```
+
+Result will look like follows:
+
+```html
+<input type="checkbox" name="check_1" id="check_1" value="" disabled="disabled">
+<input type="checkbox" name="check_2" id="check_2" value="" disabled="disabled" checked="checked">
+```
+
 ### Installation
 
 ```

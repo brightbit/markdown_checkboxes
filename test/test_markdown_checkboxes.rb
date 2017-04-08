@@ -1,10 +1,10 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/markdown_checkboxes'
+require 'markdown_checkboxes'
 
 class MarkdownCheckboxesTest < Test::Unit::TestCase
 
   def setup
-    @m ||= CheckboxMarkdown.new(Redcarpet::Render::HTML.new())
+    @m ||= CheckboxMarkdown.new(Redcarpet::Render::HTML.new)
   end
 
   def test_proper_markdown_inheritance
@@ -13,32 +13,46 @@ class MarkdownCheckboxesTest < Test::Unit::TestCase
   end
 
   def test_standard_markdown
-    assert_equal @m.render("## Hello"), "<h2>Hello</h2>\n"
-    assert_equal @m.render("**Bold**"), "<p><strong>Bold</strong></p>\n"
+    assert_equal @m.render('## Hello'), "<h2>Hello</h2>\n"
+    assert_equal @m.render('**Bold**'), "<p><strong>Bold</strong></p>\n"
   end
 
   def test_checkbox_existence
-    assert_match /<input.* \/>/,    @m.render("- [ ]")
-    assert_match /type="checkbox"/, @m.render("- [ ]")
+    assert_match(/<input.* \/>/,    @m.render('- [ ]'))
+    assert_match(/type="checkbox"/, @m.render('- [ ]'))
   end
 
   def test_checkbox_check_attribute
-    assert_match /checked="checked"/,     @m.render("- [x]")
-    assert_no_match /checked="checked"/,  @m.render("- [ ]")
+    assert_match(/checked="checked"/,     @m.render('- [x]'))
+    assert_no_match(/checked="checked"/,  @m.render('- [ ]'))
   end
 
   def test_checkbox_data_setting
-    assert_match(/data-remote="true"/,
-      @m.render("- [ ]") do |data, updated_text|
-        data.remote = true
-      end
+    assert_match(
+      /data-remote="true"/,
+      @m.render('- [ ]') { |data, _| data.remote = true }
     )
 
-    assert_match(/data-method="put"/,
-      @m.render("- [x]") do |data, updated_text|
+    assert_match(
+      /data-method="put"/,
+      @m.render('- [x]') do |data, _|
         data.remote = true
         data.method = :put
       end
     )
+  end
+
+  def test_checkbox_disabled_html_option
+    assert_match(/disabled="disabled"/, @m.render('- [ ]', disabled: true))
+    assert_match(/disabled="disabled"/, @m.render('- [x]', disabled: true))
+    refute_match(/disabled/, @m.render('- [ ]', disabled: false))
+    refute_match(/disabled/, @m.render('- [x]', disabled: false))
+    refute_match(/disabled/, @m.render('- [ ]'))
+    refute_match(/disabled/, @m.render('- [x]'))
+  end
+
+  def test_raw_text_in_html_options
+    assert_match(/lorem\sipsum/, @m.render('- [ ]', disabled: true, raw_text: 'lorem ipsum') { |data, text| data.url = 'path?key=' + text })
+    assert_match(/hello\sworld/, @m.render('- [ ]', disabled: false, raw_text: 'hello world') { |data, text| data.url = 'path?key=' + text })
   end
 end

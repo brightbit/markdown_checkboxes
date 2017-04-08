@@ -1,45 +1,37 @@
 require 'redcarpet'
 require 'action_view'
-require File.dirname(__FILE__) + '/markdown_checkboxes/data_struct'
+require 'markdown_checkboxes/data_struct'
 
 class CheckboxMarkdown < Redcarpet::Markdown
   include ActionView::Helpers::FormTagHelper
 
-  VERSION = '1.0.0'
+  CHECKBOX_REGEX = /-\s?\[(x|\s)\]/
 
-  def render(text, &block)
-    text = parse_with_checkboxes(text, &block)
-    super(text)
+  def render(text, html_options = {}, &block)
+    super(parse_with_checkboxes(text, html_options, &block))
   end
 
   private
 
-  def parse_with_checkboxes(text, &block)
-    checkbox_regex  = /-\s?\[(x|\s)\]/
+  def parse_with_checkboxes(text, html_options, &block)
+    raw_text = html_options.delete(:raw_text) { text }
 
-    text.gsub(checkbox_regex).with_index do |current_match, current_index|
-      checked = current_match =~ /x/ ? true : false
+    text.gsub(CHECKBOX_REGEX).with_index do |current_match, current_index|
+      checked = current_match =~ /x/
+      body = updated_body(raw_text, current_index, checked)
 
-      body =
-        text.gsub(checkbox_regex).with_index do |match, index|
-          if index == current_index
-            checked ? "- [ ]" : "- [x]"
-          else
-            match
-          end
-        end
-
-      check_box_tag "check_#{current_index}", "", checked, data: data_options(body, &block)
+      check_box_tag("check_#{current_index}", '', checked, **html_options, data: data_options(body, &block))
     end
   end
 
-  def data_options(body)
-    if block_given?
-      data_struct = DataStruct.new
-      yield(data_struct, body)
-      data_struct.serializable_hash
-    else
-      {}
+  def data_options(body, &block)
+    DataStruct.new(body, &block).data
+  end
+
+  def updated_body(text, current_index, current_checked)
+    text.gsub(CHECKBOX_REGEX).with_index do |match, index|
+      next match if index != current_index
+      current_checked ? '- [ ]' : '- [x]'
     end
   end
 
