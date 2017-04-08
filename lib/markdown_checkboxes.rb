@@ -14,9 +14,11 @@ class CheckboxMarkdown < Redcarpet::Markdown
   private
 
   def parse_with_checkboxes(text, html_options, &block)
+    raw_text = html_options.delete(:raw_text) { text }
+
     text.gsub(CHECKBOX_REGEX).with_index do |current_match, current_index|
       checked = current_match =~ /x/
-      body = updated_body(text, current_index, checked)
+      body = updated_body(raw_text, current_index, checked)
 
       check_box_tag("check_#{current_index}", '', checked, **html_options, data: data_options(body, &block))
     end
